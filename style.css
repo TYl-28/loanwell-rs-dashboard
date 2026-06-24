@@ -1,0 +1,662 @@
+/* =========================
+   LoanWell-RS Dashboard CSS
+   ========================= */
+
+/* ===== Global app background ===== */
+.stApp {
+    background-color: #f3f5f8;
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+}
+
+.block-container {
+    padding-top: 1.6rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* ===== Sidebar - light dashboard style ===== */
+section[data-testid="stSidebar"] {
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+}
+
+section[data-testid="stSidebar"] * {
+    color: #111827 !important;
+}
+
+.sidebar-title {
+    font-size: 23px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+}
+
+.sidebar-subtitle {
+    font-size: 12px;
+    color: #6b7280 !important;
+    margin-bottom: 18px;
+}
+
+/* Sidebar inputs */
+section[data-testid="stSidebar"] div[data-baseweb="input"] > div,
+section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+    background-color: #f9fafb !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+}
+
+section[data-testid="stSidebar"] input {
+    color: #111827 !important;
+}
+
+section[data-testid="stSidebar"] hr {
+    border-color: #e5e7eb;
+}
+
+/* ===== Page header ===== */
+.main-title {
+    font-size: 34px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 4px;
+    letter-spacing: -0.4px;
+}
+
+.sub-title {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 22px;
+}
+
+/* ===== Metric cards ===== */
+.metric-card {
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 18px;
+    box-shadow: 0px 8px 24px rgba(15, 23, 42, 0.06);
+    text-align: center;
+    min-height: 105px;
+    margin-bottom: 16px;
+    border: 1px solid #edf0f5;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 12px 28px rgba(15, 23, 42, 0.10);
+}
+
+.metric-title {
+    font-size: 11px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.metric-value,
+.metric-value-small {
+    font-size: 21px !important;
+    font-weight: 800;
+    color: #111827;
+    white-space: nowrap;
+}
+
+/* ===== Note / info box ===== */
+.note-box {
+    background-color: #ffffff;
+    border-left: 5px solid #8fb3ff;
+    padding: 14px 18px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    color: #374151;
+    box-shadow: 0px 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+/* ===== Tabs ===== */
+button[data-baseweb="tab"] {
+    font-weight: 700;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #111827 !important;
+    border-bottom: 3px solid #8fb3ff !important;
+}
+
+div[data-baseweb="tab-highlight"] {
+    background-color: #8fb3ff !important;
+}
+
+/* ===== Streamlit bordered containers ===== */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+    padding: 22px 24px !important;
+    overflow: hidden !important;
+}
+
+/* Force inside of Streamlit container to become white */
+div[data-testid="stVerticalBlockBorderWrapper"] > div {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 24px !important;
+}
+
+/* Remove grey internal container feeling */
+div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stVerticalBlock"] {
+    background: #ffffff !important;
+}
+
+/* ===== Labels ===== */
+label, .stNumberInput label, .stSlider label, .stSelectbox label {
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+/* ===== Main-area inputs ===== */
+div[data-baseweb="input"] > div,
+div[data-baseweb="select"] > div {
+    background-color: #ffffff !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0px 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+/* ===== Section subheaders ===== */
+h3 {
+    color: #111827 !important;
+    font-weight: 800 !important;
+}
+
+/* ===== Dataframes ===== */
+div[data-testid="stDataFrame"] {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    border: 1px solid #eef2f7 !important;
+    box-shadow: none !important;
+}
+
+/* ===== Plotly Charts ===== */
+div[data-testid="stPlotlyChart"] {
+    background: transparent !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+}
+
+div[data-testid="stPlotlyChart"] > div {
+    background: transparent !important;
+}
+
+/* ===== Custom HTML tables ===== */
+.custom-table-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 24px;
+    padding: 22px 24px 26px 24px;
+    margin-top: 10px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.custom-table-card h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #111827;
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+}
+
+.custom-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.custom-table td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #111827;
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== Alerts ===== */
+div[data-testid="stAlert"] {
+    border-radius: 14px;
+}
+
+/* ===== Hide footer ===== */
+footer {
+    visibility: hidden;
+}
+
+/* ===== Custom card for all table and graph sections ===== */
+div[class*="st-key-card_"] {
+    background: #ffffff !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+    padding: 22px 24px !important;
+    margin-bottom: 22px !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+
+/* Keep dataframe clean inside custom card */
+div[class*="st-key-card_"] div[data-testid="stDataFrame"] {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    border: 1px solid #eef2f7 !important;
+    box-shadow: none !important;
+}
+
+/* Make graph blend with the card */
+div[class*="st-key-card_"] div[data-testid="stPlotlyChart"] {
+    background: transparent !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+}
+
+/* Remove extra grey feeling inside card */
+div[class*="st-key-card_"] div[data-testid="stVerticalBlock"] {
+    background: transparent !important;
+}
+
+/* ===== Large HTML tables for dashboard cards ===== */
+.dashboard-table {
+    width: 100%;
+    height: 360px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 0.98rem;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.dashboard-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 16px 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-table td {
+    color: #111827;
+    text-align: left;
+    padding: 18px 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-table tr:last-child td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Make table rows larger instead of adding empty rows */
+.large-table tr {
+    height: 58px;
+}
+
+/* ===== Equal card height for Tab 1 and Tab 2 ===== */
+div[class*="st-key-card_tab1_ranking"],
+div[class*="st-key-card_tab1_brbi_chart"],
+div[class*="st-key-card_tab2_weights"],
+div[class*="st-key-card_tab2_weight_chart"] {
+    min-height: 470px !important;
+}
+
+/* ===== Reduce spacing between Tab 2 top cards and scoring matrix ===== */
+div[class*="st-key-card_tab2_weights"],
+div[class*="st-key-card_tab2_weight_chart"] {
+    margin-bottom: 6px !important;
+}
+
+.custom-table-card {
+    margin-top: 0px !important;
+}
+
+/* ===== Table wrapper ===== */
+.dashboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 16px;
+}
+
+/* ===== Wide table for Tab 3 and Tab 4 ===== */
+.wide-table {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 0.9rem;
+    table-layout: auto;
+}
+
+.wide-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.wide-table td {
+    color: #111827;
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.wide-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== Reduce spacing for Tab 3 and Tab 4 cards ===== */
+div[class*="st-key-card_tab3_affordability"],
+div[class*="st-key-card_tab3_burden_chart"],
+div[class*="st-key-card_tab4_message"],
+div[class*="st-key-card_tab4_combined_view"] {
+    margin-bottom: 6px !important;
+}
+
+/* ===== Compact table for Tab 5 side-by-side layout ===== */
+.compact-table {
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 0.82rem;
+    table-layout: auto;
+}
+
+.compact-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 9px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.compact-table td {
+    color: #111827;
+    text-align: left;
+    padding: 9px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.compact-table tr:last-child td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* ===== Side-by-side analysis layout ===== */
+.analysis-block {
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+
+/* table wrapper */
+.dashboard-table-wrapper {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* default table */
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    background-color: #ffffff;
+}
+
+.dashboard-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 11px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.dashboard-table td {
+    color: #111827;
+    text-align: left;
+    padding: 11px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.dashboard-table th:last-child,
+.dashboard-table td:last-child {
+    border-right: none;
+}
+
+/* 保留最后一行底线 */
+.dashboard-table tr:last-child td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* compact version */
+.compact-table {
+    font-size: 0.88rem;
+}
+
+.compact-table th,
+.compact-table td {
+    padding: 10px 8px;
+}
+
+/* slightly larger table */
+.large-table {
+    font-size: 0.95rem;
+}
+
+.large-table th,
+.large-table td {
+    padding: 12px 10px;
+}
+
+/* ===== Table and graph alignment for Tab 5 ===== */
+
+/* Table outer frame */
+.dashboard-table-wrapper {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* Keep bottom line for the last row */
+.dashboard-table tr:last-child td,
+.compact-table tr:last-child td,
+.wide-table tr:last-child td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Left and right panel height control */
+.analysis-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 12px 14px 16px 14px;
+    min-height: 430px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* For longer table, especially Tenure Sensitivity */
+.analysis-card.tall {
+    min-height: 560px;
+}
+
+/* ===== Prevent Tab 5 compact tables from cutting text ===== */
+.dashboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+.compact-table {
+    width: 100%;
+    min-width: 520px;
+    font-size: 0.82rem;
+    table-layout: auto;
+}
+
+.compact-table th,
+.compact-table td {
+    padding: 10px 8px;
+    white-space: nowrap;
+}
+
+/* ===== Force table text to align left ===== */
+.left-table th,
+.left-table td {
+    text-align: left !important;
+}
+
+/* ===== Tab 5 table and graph alignment ===== */
+
+.analysis-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 18px;
+}
+
+/* Table wrapper */
+.dashboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #ffffff;
+}
+
+/* Keep table bottom border */
+.dashboard-table tr:last-child td,
+.compact-table tr:last-child td,
+.wide-table tr:last-child td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Normal Tab 5 table */
+.tab5-table {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 0.84rem;
+    table-layout: auto;
+}
+
+.tab5-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 9px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.tab5-table td {
+    color: #111827;
+    text-align: left;
+    padding: 13px 9px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.tab5-table th:last-child,
+.tab5-table td:last-child {
+    border-right: none;
+}
+
+/* Make 5-row tables taller to match graph */
+.tab5-table tbody tr {
+    height: 52px;
+}
+
+/* Special table for Tenure Sensitivity because it has 10 rows */
+.tenure-table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-size: 0.80rem;
+    table-layout: auto;
+}
+
+.tenure-table th {
+    background-color: #f9fafb;
+    color: #6b7280;
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.tenure-table td {
+    color: #111827;
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.tenure-table th:last-child,
+.tenure-table td:last-child {
+    border-right: none;
+}
+
+.tenure-table tbody tr {
+    height: 38px;
+}
