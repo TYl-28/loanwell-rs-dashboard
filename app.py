@@ -106,9 +106,9 @@ def calculate_max_affordable_loan(max_monthly_payment, annual_rate, tenure_years
 
 
 def get_affordability_status(burden_ratio):
-    if burden_ratio <= 0.20:
+    if burden_ratio <= 0.30:
         return "Affordable"
-    elif burden_ratio <= 0.30:
+    elif burden_ratio <= 0.40:
         return "Moderate"
     else:
         return "High Burden"
