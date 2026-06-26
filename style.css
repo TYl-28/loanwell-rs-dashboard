@@ -751,3 +751,17 @@ div[class*="st-key-card_tab4_pdf_report"] .button:active {
     box-shadow: 0px 8px 30px -12px #5f7285 !important;
 }
 
+/* Sidebar note text */
+[data-testid="stSidebar"] .sidebar-note-text {
+    color: #6b7280 !important;
+    font-size: 0.88rem !important;
+    line-height: 1.65 !important;
+    text-align: left !important;
+    margin-top: 10px !important;
+}
+
+[data-testid="stSidebar"] .sidebar-note-text b {
+    color: #6b7280 !important;
+    font-weight: 600 !important;
+}
+

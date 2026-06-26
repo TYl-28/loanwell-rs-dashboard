@@ -562,12 +562,16 @@ scenario = st.sidebar.selectbox(
 )
 
 st.sidebar.markdown("---")
-st.sidebar.caption(
-    "BRBI ranking evaluates loan product wellness. "
-    "Affordability simulation checks whether the loan condition is manageable for the user."
-)
-st.sidebar.caption(
-    "Note: Repayment results are estimates for affordability simulation only."
+
+st.sidebar.markdown(
+    """
+<div class="sidebar-note-text">
+BRBI ranking evaluates loan product wellness. Affordability simulation checks whether the loan condition is manageable for the user.
+<br><br>
+<b>Note:</b> Repayment results are estimates for affordability simulation only.
+</div>
+    """,
+    unsafe_allow_html=True
 )
 # =========================
 # Build affordability table
