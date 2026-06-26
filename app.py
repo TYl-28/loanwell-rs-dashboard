@@ -2,6 +2,16 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import base64
+
+from io import BytesIO
+from datetime import datetime
+
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_LEFT,TA_JUSTIFY
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 
 # =========================
 # Page configuration
@@ -198,6 +208,298 @@ def get_best_affordable_option(affordability_df):
 
     return affordability_df.sort_values("Repayment Burden Ratio").iloc[0]
 
+def format_money(value):
+    try:
+        return f"RM {float(value):,.2f}"
+    except:
+        return "-"
+
+
+def format_percent(value):
+    try:
+        value = float(value)
+        if value <= 1:
+            return f"{value * 100:.2f}%"
+        return f"{value:.2f}%"
+    except:
+        return "-"
+
+
+def get_row_value(row, column_name, default="-"):
+    try:
+        if column_name in row.index:
+            return row[column_name]
+        return default
+    except:
+        return default
+
+
+def create_recommendation_pdf(
+    recommended_row,
+    affordability_df,
+    brbi_df,
+    monthly_income,
+    loan_amount,
+    loan_tenure,
+    burden_limit
+):
+    buffer = BytesIO()
+
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=36,
+        leftMargin=36,
+        topMargin=36,
+        bottomMargin=36
+    )
+
+    page_width = A4[0] - 72
+
+    styles = getSampleStyleSheet()
+
+    title_style = ParagraphStyle(
+        "CustomTitle",
+        parent=styles["Title"],
+        fontSize=20,
+        leading=24,
+        alignment=TA_LEFT,
+        spaceAfter=6
+    )
+
+    subtitle_style = ParagraphStyle(
+        "Subtitle",
+        parent=styles["BodyText"],
+        fontSize=10,
+        leading=14,
+        textColor=colors.HexColor("#374151"),
+        alignment=TA_LEFT,
+        spaceAfter=10
+    )
+
+    heading_style = ParagraphStyle(
+        "Heading",
+        parent=styles["Heading2"],
+        fontSize=14,
+        leading=18,
+        textColor=colors.HexColor("#111827"),
+        spaceBefore=12,
+        spaceAfter=8,
+        alignment=TA_LEFT
+    )
+
+    normal_style = ParagraphStyle(
+        "Normal",
+        parent=styles["BodyText"],
+        fontSize=9.5,
+        leading=15,
+        alignment=TA_JUSTIFY,
+        textColor=colors.HexColor("#111827"),
+        spaceAfter=10
+    )
+
+    story = []
+
+    def money(value):
+        try:
+            return f"RM {float(value):,.2f}"
+        except:
+            return "-"
+
+    def percent(value):
+        try:
+            value = float(value)
+            if value <= 1:
+                return f"{value * 100:.2f}%"
+            return f"{value:.2f}%"
+        except:
+            return "-"
+
+    def get_provider_col(df):
+        if "Alternative" in df.columns:
+            return "Alternative"
+        elif "Provider" in df.columns:
+            return "Provider"
+        else:
+            return None
+
+    def get_series_value(row, col, default="-"):
+        try:
+            if col in row.index:
+                return row[col]
+            return default
+        except:
+            return default
+
+    def style_table(table, header_color="#F3F4F6"):
+        table.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor(header_color)),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#111827")),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
+            ("FONTSIZE", (0, 0), (-1, -1), 8.5),
+            ("ALIGN", (0, 0), (-1, -1), "LEFT"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#9CA3AF")),
+            ("LEFTPADDING", (0, 0), (-1, -1), 7),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 7),
+            ("TOPPADDING", (0, 0), (-1, -1), 6),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ]))
+        table.hAlign = "LEFT"
+        return table
+
+    # =========================
+    # Title
+    # =========================
+    story.append(Paragraph("LoanWell-RS Recommendation Report", title_style))
+    story.append(Paragraph(
+        "Borrower Wellness-Based Personal Loan Recommendation System",
+        subtitle_style
+    ))
+    story.append(Paragraph(
+        f"Generated on: {datetime.now().strftime('%d %B %Y, %I:%M %p')}",
+        subtitle_style
+    ))
+    story.append(Spacer(1, 8))
+
+    # =========================
+    # 1. Borrower Input Summary
+    # =========================
+    story.append(Paragraph("1. Borrower Input Summary", heading_style))
+
+    input_data = [
+        ["Input Variable", "Value"],
+        ["Monthly Income", money(monthly_income)],
+        ["Loan Amount", money(loan_amount)],
+        ["Loan Tenure", f"{loan_tenure} years"],
+        ["Affordability Limit", percent(burden_limit)]
+    ]
+
+    input_table = Table(input_data, colWidths=[180, page_width - 180])
+    input_table = style_table(input_table, "#E5E7EB")
+    story.append(input_table)
+    story.append(Spacer(1, 12))
+
+    # =========================
+    # 2. Recommendation Result
+    # =========================
+    story.append(Paragraph("2. Recommendation Result", heading_style))
+
+    recommended_provider = get_series_value(recommended_row, "Alternative")
+    brbi_rank = get_series_value(recommended_row, "BRBI Rank")
+    brbi_score = get_series_value(recommended_row, "BRBI Score")
+    monthly_instalment = get_series_value(recommended_row, "Monthly Instalment")
+    burden_ratio = get_series_value(recommended_row, "Repayment Burden Ratio")
+    affordability_status = get_series_value(recommended_row, "Affordability Status")
+
+    recommendation_data = [
+        ["Item", "Result"],
+        ["Recommended Provider", str(recommended_provider)],
+        ["BRBI Rank", str(brbi_rank)],
+        ["BRBI Score", f"{float(brbi_score):.3f}" if brbi_score != "-" else "-"],
+        ["Estimated Monthly Instalment", money(monthly_instalment)],
+        ["Repayment Burden Ratio", percent(burden_ratio)],
+        ["Affordability Status", str(affordability_status)]
+    ]
+
+    recommendation_table = Table(
+        recommendation_data,
+        colWidths=[180, page_width - 180]
+    )
+    recommendation_table = style_table(recommendation_table, "#DBEAFE")
+    story.append(recommendation_table)
+    story.append(Spacer(1, 10))
+
+    story.append(Paragraph(
+        "The recommendation is generated by combining the Borrower Risk-Benefit Index "
+        "(BRBI) ranking with the affordability status. If affordable options exist, "
+        "the system selects the best BRBI-ranked affordable option. If no affordable "
+        "option exists, the system checks for moderate options. If all options are high "
+        "burden, the system highlights the option with the lowest repayment burden.",
+        normal_style
+    ))
+
+    story.append(Spacer(1, 8))
+
+    # =========================
+    # 3. Affordability Comparison
+    # =========================
+    story.append(Paragraph("3. Affordability Comparison", heading_style))
+
+    provider_col = get_provider_col(affordability_df)
+
+    comparison_data = [[
+        "Loan Provider",
+        "Monthly Instalment",
+        "Repayment Burden Ratio",
+        "Affordability Status",
+        "BRBI Rank"
+    ]]
+
+    for _, row in affordability_df.iterrows():
+        comparison_data.append([
+            str(row.get(provider_col, "-")) if provider_col else "-",
+            money(row.get("Monthly Instalment", "-")),
+            percent(row.get("Repayment Burden Ratio", "-")),
+            str(row.get("Affordability Status", "-")),
+            str(row.get("BRBI Rank", "-"))
+        ])
+
+    comparison_table = Table(
+        comparison_data,
+        colWidths=[105, 120, 125, 110, 63]
+    )
+    comparison_table = style_table(comparison_table, "#F3F4F6")
+    story.append(comparison_table)
+    story.append(Spacer(1, 12))
+
+    # =========================
+    # 4. BRBI Ranking Summary
+    # =========================
+    story.append(Paragraph("4. BRBI Ranking Summary", heading_style))
+
+    brbi_provider_col = get_provider_col(brbi_df)
+
+    brbi_data = [["Rank", "Loan Provider", "BRBI Score"]]
+
+    for _, row in brbi_df.iterrows():
+        brbi_data.append([
+            str(row.get("Rank", "-")),
+            str(row.get(brbi_provider_col, "-")) if brbi_provider_col else "-",
+            f"{float(row.get('BRBI Score', 0)):.3f}"
+        ])
+
+    brbi_table = Table(
+        brbi_data,
+        colWidths=[70, 250, 120]
+    )
+    brbi_table = style_table(brbi_table, "#F3F4F6")
+    story.append(brbi_table)
+    story.append(Spacer(1, 12))
+
+    # =========================
+    # 5. Important Note
+    # =========================
+    story.append(Paragraph("5. Important Note", heading_style))
+
+    story.append(Paragraph(
+        "This report is generated for decision support purposes only. It does not "
+        "represent official loan approval, official quotation, financial advice, or "
+        "a guarantee that the borrower will be approved by the selected provider. "
+        "Actual loan approval may depend on provider-specific conditions such as "
+        "credit score, CCRIS or CTOS record, income verification, employment status, "
+        "existing debt commitments, loan amount limit, tenure limit, and internal "
+        "approval rules.",
+        normal_style
+    ))
+
+    doc.build(story)
+
+    pdf = buffer.getvalue()
+    buffer.close()
+
+    return pdf
 
 def clean_chart_layout(fig, height=360):
     fig.update_layout(
@@ -662,7 +964,42 @@ with tab4:
             combined_display,
             class_name="dashboard-table wide-table"
         )
-        
+
+    # =========================
+    # Recommendation PDF Report
+    # =========================
+
+    pdf_file = create_recommendation_pdf(
+        recommended_row=best_option,
+        affordability_df=affordability_df,
+        brbi_df=display_ranking,
+        monthly_income=monthly_income,
+        loan_amount=loan_amount,
+        loan_tenure=loan_tenure,
+        burden_limit=burden_limit
+    )
+
+    pdf_base64 = base64.b64encode(pdf_file).decode("utf-8")
+
+    with st.container(border=False, key="card_tab4_pdf_report"):
+        st.markdown(
+            f"""
+            <div class="pdf-report-title">Recommendation Report</div>
+            <div class="pdf-report-desc">
+                Download a PDF report based on the current borrower input, BRBI ranking,
+                affordability result, and final recommendation.
+            </div>
+
+            <a href="data:application/pdf;base64,{pdf_base64}"
+               download="LoanWell_RS_Recommendation_Report.pdf"
+               class="button">
+                <span>Download</span>
+            </a>
+            """,
+            unsafe_allow_html=True
+        )
+
+
 # =========================
 # Tab 5: Sensitivity and Scenario Analysis
 # =========================

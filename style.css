@@ -660,3 +660,94 @@ div[class*="st-key-card_tab4_combined_view"] {
 .tenure-table tbody tr {
     height: 38px;
 }
+
+/* =========================
+   Recommendation Report Card Only
+   ========================= */
+
+div[class*="st-key-card_tab4_pdf_report"] {
+    background: #ffffff !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+    padding: 22px 24px 20px 24px !important;
+    margin-top: 0px !important;
+    margin-bottom: 22px !important;
+    border: none !important;
+}
+
+.pdf-report-title {
+    font-size: 1.7rem !important;
+    font-weight: 800 !important;
+    color: #030712 !important;
+    line-height: 1.25 !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.pdf-report-desc {
+    font-size: 0.95rem !important;
+    color: #111827 !important;
+    line-height: 1.45 !important;
+    margin: 0 0 14px 0 !important;
+}
+
+
+/* =========================
+   Uiverse-style Download Button
+   ========================= */
+
+div[class*="st-key-card_tab4_pdf_report"] .button {
+    display: inline-block !important;
+    border-radius: 7px !important;
+    border: none !important;
+    background: #6f8498 !important;
+    color: white !important;
+    font-family: inherit !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    box-shadow: 0px 14px 56px -11px #6f8498 !important;
+    width: 10em !important;
+    padding: 1em !important;
+    transition: all 0.4s !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+}
+
+div[class*="st-key-card_tab4_pdf_report"] .button span {
+    cursor: pointer !important;
+    display: inline-block !important;
+    position: relative !important;
+    transition: 0.4s !important;
+    color: white !important;
+}
+
+div[class*="st-key-card_tab4_pdf_report"] .button span:after {
+    content: ' PDF' !important;
+    position: absolute !important;
+    opacity: 0 !important;
+    top: 0 !important;
+    right: -20px !important;
+    transition: 0.7s !important;
+}
+
+div[class*="st-key-card_tab4_pdf_report"] .button:hover span {
+    padding-right: 2.4em !important;
+}
+
+div[class*="st-key-card_tab4_pdf_report"] .button:hover span:after {
+    opacity: 1 !important;
+    right: 0 !important;
+}
+
+div[class*="st-key-card_tab4_pdf_report"] .button:hover {
+    background: #5f7285 !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0px 16px 60px -10px #5f7285 !important;
+}
+
+div[class*="st-key-card_tab4_pdf_report"] .button:active {
+    transform: translateY(2px) !important;
+    box-shadow: 0px 8px 30px -12px #5f7285 !important;
+}
+
